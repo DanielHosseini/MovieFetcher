@@ -1,10 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -15,29 +11,41 @@ namespace MovieFetcher
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewMovies : ContentPage
     {
+        private string _yifyUrl = "https://yts.ag/api/v2/list_movies.json?limit=10&sort_by=year&order_by=desc";
+
         public ViewMovies()
         {
             InitializeComponent();
-            
         }
 
-        private async Task FetchMovies(object sender, System.EventArgs e)
+        private async void FetchMovies(object sender, System.EventArgs e)
         {
-
-            HttpClient htClient = new HttpClient();
-            var response = await htClient.GetStringAsync("https://yts.ag/api/v2/list_movies.json?limit=10&sort_by=year&order_by=desc");
-            await DisplayAlert("Clicked", "Working task", "ok");
-            var root = JsonConvert.DeserializeObject<YIFYMovies>(response);
-
-            foreach (var movie in root.Data.Movies)
+            loadingIndictor.IsRunning = true;
+            try
             {
-                Debug.WriteLine(movie.Title);
-                jsonLabel.Text += movie.Title;
-                
+                var YIFYMoviesResponse = await ParseJsonAsync(_yifyUrl);
             }
-                
+            catch (Exception)
+            {
+                //Throw error to UI
+                throw;
+            }
+            loadingIndictor.IsRunning = false;
 
+            /*  foreach (var movie in root.Data.Movies)
+              {
+                  Debug.WriteLine(movie.Title);
+                  jsonLabel.Text += movie.Title;
+              }*/
+        }
 
+        public async Task<YIFYMovies> ParseJsonAsync(string url)
+        {
+            HttpClient htClient = new HttpClient();
+            var response = await htClient.GetStringAsync(url);
+            var YIFYMovies = JsonConvert.DeserializeObject<YIFYMovies>(response);
+
+            return YIFYMovies;
         }
     }
 }
