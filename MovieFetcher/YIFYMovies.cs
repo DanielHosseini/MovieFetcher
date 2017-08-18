@@ -2,67 +2,67 @@
 
 public class Torrent
 {
-    public string Url { get; set; }
-    public string Hash { get; set; }
-    public string Quality { get; set; }
-    public int Seeds { get; set; }
-    public int Peers { get; set; }
-    public string Size { get; set; }
-    public int SizeBytes { get; set; }
-    public string DateUploaded { get; set; }
-    public int DateUploadedUnix { get; set; }
+    public string url { get; set; }
+    public string hash { get; set; }
+    public string quality { get; set; }
+    public int seeds { get; set; }
+    public int peers { get; set; }
+    public string size { get; set; }
+    public int size_bytes { get; set; }
+    public string date_uploaded { get; set; }
+    public int date_uploaded_unix { get; set; }
 }
 
 public class Movy
 {
-    public int Id { get; set; }
-    public string Url { get; set; }
-    public string ImdbCode { get; set; }
-    public string Title { get; set; }
-    public string TitleEnglish { get; set; }
-    public string TitleLong { get; set; }
-    public string Slug { get; set; }
-    public int Year { get; set; }
-    public double Rating { get; set; }
-    public int Runtime { get; set; }
-    public IList<string> Genres { get; set; }
-    public string Summary { get; set; }
-    public string DescriptionFull { get; set; }
-    public string Synopsis { get; set; }
-    public string YtTrailerCode { get; set; }
-    public string Language { get; set; }
-    public string MpaRating { get; set; }
-    public string BackgroundImage { get; set; }
-    public string BackgroundImageOriginal { get; set; }
-    public string SmallCoverImage { get; set; }
-    public string MediumCoverImage { get; set; }
-    public string LargeCoverImage { get; set; }
-    public string State { get; set; }
-    public IList<Torrent> Torrents { get; set; }
-    public string DateUploaded { get; set; }
-    public int DateUploadedUnix { get; set; }
+    public int id { get; set; }
+    public string url { get; set; }
+    public string imdb_code { get; set; }
+    public string title { get; set; }
+    public string title_english { get; set; }
+    public string title_long { get; set; }
+    public string slug { get; set; }
+    public int year { get; set; }
+    public double rating { get; set; }
+    public int runtime { get; set; }
+    public IList<string> genres { get; set; }
+    public string summary { get; set; }
+    public string description_full { get; set; }
+    public string synopsis { get; set; }
+    public string yt_trailer_code { get; set; }
+    public string language { get; set; }
+    public string mpa_rating { get; set; }
+    public string background_image { get; set; }
+    public string background_image_original { get; set; }
+    public string small_cover_image { get; set; }
+    public string medium_cover_image { get; set; }
+    public string large_cover_image { get; set; }
+    public string state { get; set; }
+    public IList<Torrent> torrents { get; set; }
+    public string date_uploaded { get; set; }
+    public int date_uploaded_unix { get; set; }
 }
 
 public class Data
 {
-    public int MovieCount { get; set; }
-    public int Limit { get; set; }
-    public int PageNumber { get; set; }
-    public IList<Movy> Movies { get; set; }
+    public int movie_count { get; set; }
+    public int limit { get; set; }
+    public int page_number { get; set; }
+    public IList<Movy> movies { get; set; }
 }
 
 public class Meta
 {
-    public int ServerTime { get; set; }
-    public string ServerTimezone { get; set; }
-    public int ApiVersion { get; set; }
-    public string ExecutionTime { get; set; }
+    public int server_time { get; set; }
+    public string server_timezone { get; set; }
+    public int api_version { get; set; }
+    public string execution_time { get; set; }
 }
 
 public class YIFYMovies
 {
-    public string Status { get; set; }
-    public string StatusMessage { get; set; }
-    public Data Data { get; set; }
-    public Meta Meta { get; set; }
+    public string status { get; set; }
+    public string status_message { get; set; }
+    public Data data { get; set; }
+    public Meta @meta { get; set; }
 }
