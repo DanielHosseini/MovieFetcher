@@ -48,36 +48,35 @@ namespace MovieFetcher
         {
             var TotalAmountOfMovies = yifyMovies.data.limit;
             IList<Movy> movieNames = yifyMovies.data.movies;
-            Debug.WriteLine ("try this" + movieNames[0].background_image);
+            Debug.WriteLine("try this" + movieNames[0].background_image);
             Debug.WriteLine(TotalAmountOfMovies);
             DisplayAlert(TotalAmountOfMovies.ToString(), "ok", "ok");
-            Grid grid = new Grid
-            {
-                RowSpacing = 10,
-                ColumnSpacing = 10
+            var scroll = new ScrollView();
+            scroll.Orientation = ScrollOrientation.Vertical;
+            Content = scroll;
 
-            };
-            foreach (var linkImage in movieNames)
-            {
-                Debug.WriteLine("TITLE" + linkImage.title);
-                Debug.WriteLine("Language" + linkImage.language);
-                Debug.WriteLine("yt_trailer_cod" + linkImage.yt_trailer_code);
-                Debug.WriteLine("Year" + linkImage.year);
-                Debug.WriteLine("State" + linkImage.state);
+            Grid grid = new Grid();
 
-
-            }
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
 
 
-            //grid.Children.Add(new Image { Source = new Uri(movieNames[0].SmallCoverImage.Replace("/", "") ) }, 0, 0);
-            //grid.Children.Add(new Image { Source = new Uri(movieNames[1].SmallCoverImage.Replace("/", "")) }, 0, 0);
-            //grid.Children.Add(new Image { Source = new Uri(movieNames[2].SmallCoverImage.Replace("/", "")) }, 0, 0);
-            //grid.Children.Add(new Image { Source = new Uri(movieNames[3].SmallCoverImage.Replace("/", "")) }, 0, 0);
-            Content = grid;
+            grid.Children.Add(new Image { Source = new Uri(movieNames[0].large_cover_image) }, 0, 0);
+            grid.Children.Add(new Image { Source = new Uri(movieNames[1].large_cover_image) }, 1, 0);
+            grid.Children.Add(new Image { Source = new Uri(movieNames[2].large_cover_image) }, 0, 1);
+            grid.Children.Add(new Image { Source = new Uri(movieNames[3].large_cover_image) }, 1, 1);
+            grid.Children.Add(new Image { Source = new Uri(movieNames[4].large_cover_image) }, 0, 2);
+            grid.Children.Add(new Image { Source = new Uri(movieNames[5].large_cover_image) }, 1, 2);
+            grid.Children.Add(new Image { Source = new Uri(movieNames[5].large_cover_image) }, 0, 3);
 
+
+            scroll.Content = grid;
         }
-
-
 
         public async Task<YIFYMovies> ParseJsonAsync(string url)
         {
