@@ -40,9 +40,11 @@ namespace MovieFetcher
         public void PopulateUiGridView(YIFYMovies yifyMovies)
         {
 			loadingIndictor.IsRunning = false;
+
 			var TotalAmountOfMovies = yifyMovies.data.limit;
             IList<Movy> movieObject = yifyMovies.data.movies;
-            var scroll = new ScrollView
+			var tapGestureRecognizer = new TapGestureRecognizer();
+			var scroll = new ScrollView
             {
                 Orientation = ScrollOrientation.Vertical,
             };
@@ -61,7 +63,10 @@ namespace MovieFetcher
 				for (int column = 0; column < 2; column++)
                 {
 
-                    grid.Children.Add(new Image {Aspect = Aspect.Fill, Source = new Uri(movieObject[movieNumber].large_cover_image) }, column, row);
+					//  grid.Children.Add(new Image {Aspect = Aspect.Fill,  Source = new Uri(movieObject[movieNumber].large_cover_image) }, column, row);
+					var image = new Image {Aspect = Aspect.Fill,  Source = new Uri(movieObject[movieNumber].large_cover_image) };
+					image.GestureRecognizers.Add(tapGestureRecognizer);
+					grid.Children.Add(image, column, row);
 
 
 
@@ -70,6 +75,15 @@ namespace MovieFetcher
 			
 
 			}
+
+			tapGestureRecognizer.Tapped += (sender, e) => {
+                // handle the tap
+                var image = (Image) sender;
+                var childrenIDTapped = grid.Children.IndexOf(image);
+
+                DisplayAlert("Tapped", childrenIDTapped.ToString(), "ok");
+
+			};
 
 
 
