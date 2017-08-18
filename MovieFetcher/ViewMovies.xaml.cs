@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -14,6 +13,7 @@ namespace MovieFetcher
     public partial class ViewMovies : ContentPage
     {
         private string _yifyUrl = "https://yts.ag/api/v2/list_movies.json?limit=10&sort_by=year&order_by=desc";
+        private int movieNumber = 0;
 
         public ViewMovies()
         {
@@ -47,34 +47,54 @@ namespace MovieFetcher
         public void PopulateUiGridView(YIFYMovies yifyMovies)
         {
             var TotalAmountOfMovies = yifyMovies.data.limit;
-            IList<Movy> movieNames = yifyMovies.data.movies;
-            Debug.WriteLine("try this" + movieNames[0].background_image);
-            Debug.WriteLine(TotalAmountOfMovies);
-            DisplayAlert(TotalAmountOfMovies.ToString(), "ok", "ok");
-            var scroll = new ScrollView();
-            scroll.Orientation = ScrollOrientation.Vertical;
+            IList<Movy> movieObject = yifyMovies.data.movies;
+            var scroll = new ScrollView
+            {
+                Orientation = ScrollOrientation.Vertical,
+            };
+
+            Grid grid = new Grid
+            {
+                RowSpacing = 0,
+                ColumnSpacing = 0
+            };
+     
+
+            for (int i = 0; i < TotalAmountOfMovies/2; i++)
+            {
+                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+                for (int y = 0; y < 2; y++)
+                {
+                    grid.Children.Add(new Image { Source = new Uri(movieObject[movieNumber].large_cover_image) }, y, i);
+                    movieNumber++;
+                }
+
+
+
+            }
+
+            //grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            //grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            //grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            //grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            //grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            //grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            //grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+            //grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            //grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+            //grid.Children.Add(new Image { Source = new Uri(movieNames[0].large_cover_image) }, 0, 0);
+            //grid.Children.Add(new Image { Source = new Uri(movieNames[1].large_cover_image) }, 1, 0);
+            //grid.Children.Add(new Image { Source = new Uri(movieNames[2].large_cover_image) }, 0, 1);
+            //grid.Children.Add(new Image { Source = new Uri(movieNames[3].large_cover_image) }, 1, 1);
+            //grid.Children.Add(new Image { Source = new Uri(movieNames[4].large_cover_image) }, 0, 2);
+            //grid.Children.Add(new Image { Source = new Uri(movieNames[5].large_cover_image) }, 1, 2);
+            //grid.Children.Add(new Image { Source = new Uri(movieNames[6].large_cover_image) }, 0, 3);
+
             Content = scroll;
-
-            Grid grid = new Grid();
-
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-
-
-            grid.Children.Add(new Image { Source = new Uri(movieNames[0].large_cover_image) }, 0, 0);
-            grid.Children.Add(new Image { Source = new Uri(movieNames[1].large_cover_image) }, 1, 0);
-            grid.Children.Add(new Image { Source = new Uri(movieNames[2].large_cover_image) }, 0, 1);
-            grid.Children.Add(new Image { Source = new Uri(movieNames[3].large_cover_image) }, 1, 1);
-            grid.Children.Add(new Image { Source = new Uri(movieNames[4].large_cover_image) }, 0, 2);
-            grid.Children.Add(new Image { Source = new Uri(movieNames[5].large_cover_image) }, 1, 2);
-            grid.Children.Add(new Image { Source = new Uri(movieNames[5].large_cover_image) }, 0, 3);
-
-
             scroll.Content = grid;
         }
 
