@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using PCLStorage;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -69,13 +70,36 @@ namespace MovieFetcher
 
          
         }
-        public async Task<YIFYMovies> ParseJsonAsync(string url)
+        private async Task<YIFYMovies> ParseJsonAsync(string url)
         {
             HttpClient htClient = new HttpClient();
-            var response = await htClient.GetStringAsync(url);
-            var YIFYMovies = JsonConvert.DeserializeObject<YIFYMovies>(response);
+            var jsonResponse = await htClient.GetStringAsync(url);
+            var YIFYMovies = JsonConvert.DeserializeObject<YIFYMovies>(jsonResponse);
+            await WriteJSONToLocalFileAsync(jsonResponse);
 
             return YIFYMovies;
+        }
+
+        private async Task WriteJSONToLocalFileAsync(string JSONContent) {
+            string fileName = "JSONMovieData.txt";
+            IFolder folder = FileSystem.Current.LocalStorage;
+            IFile file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+            await file.WriteAllTextAsync(JSONContent);
+            await DisplayAlert("Operation Done", "JSON to File", "OK");
+
+        }
+
+        public async Task<string> ReadJSONFromFileAsync()
+        {
+
+            IFolder folder = FileSystem.Current.LocalStorage;
+            IFile file = await folder.GetFileAsync("JSONMovieData.txt");
+            var jsonContent = await file.ReadAllTextAsync();
+            await DisplayAlert("Operation Done", "Reading JSON from file", "OK");
+
+            return jsonContent;
+          
+            }
         }
     }
 }
