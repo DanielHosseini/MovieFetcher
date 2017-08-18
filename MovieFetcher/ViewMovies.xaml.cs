@@ -12,21 +12,21 @@ namespace MovieFetcher
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewMovies : ContentPage
     {
-        private string _yifyUrl = "https://yts.ag/api/v2/list_movies.json?limit=10&sort_by=year&order_by=desc";
+        private const string YIFYURL = "https://yts.ag/api/v2/list_movies.json?limit=20&sort_by=year&order_by=desc";
         private int movieNumber = 0;
 
         public ViewMovies()
         {
             InitializeComponent();
+            FetchMovies();
         }
 
-        private async void FetchMovies(object sender, System.EventArgs e)
+        private async void FetchMovies()
         {
             loadingIndictor.IsRunning = true;
-            fetchBtn.IsEnabled = false;
             try
             {
-                var YIFYMoviesResponse = await ParseJsonAsync(_yifyUrl);
+                var YIFYMoviesResponse = await ParseJsonAsync(YIFYURL);
                 PopulateUiGridView(YIFYMoviesResponse);
             }
             catch (Exception)
@@ -35,13 +35,6 @@ namespace MovieFetcher
                 throw;
             }
             loadingIndictor.IsRunning = false;
-            fetchBtn.IsEnabled = true;
-
-            /*  foreach (var movie in root.Data.Movies)
-              {
-                  Debug.WriteLine(movie.Title);
-                  jsonLabel.Text += movie.Title;
-              }*/
         }
 
         public void PopulateUiGridView(YIFYMovies yifyMovies)
@@ -52,52 +45,30 @@ namespace MovieFetcher
             {
                 Orientation = ScrollOrientation.Vertical,
             };
-
-            Grid grid = new Grid
+            var grid = new Grid
             {
                 RowSpacing = 0,
                 ColumnSpacing = 0
             };
-     
 
-            for (int i = 0; i < TotalAmountOfMovies/2; i++)
+            for (int row = 0; row < TotalAmountOfMovies / 2; row++)
             {
                 grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
-                for (int y = 0; y < 2; y++)
+                for (int column = 0; column < 2; column++)
                 {
-                    grid.Children.Add(new Image { Source = new Uri(movieObject[movieNumber].large_cover_image) }, y, i);
+                    grid.Children.Add(new Image { Source = new Uri(movieObject[movieNumber].large_cover_image) }, column, row);
                     movieNumber++;
                 }
-
-
-
             }
-
-            //grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            //grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            //grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            //grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            //grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            //grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            //grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-
-            //grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-            //grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-
-            //grid.Children.Add(new Image { Source = new Uri(movieNames[0].large_cover_image) }, 0, 0);
-            //grid.Children.Add(new Image { Source = new Uri(movieNames[1].large_cover_image) }, 1, 0);
-            //grid.Children.Add(new Image { Source = new Uri(movieNames[2].large_cover_image) }, 0, 1);
-            //grid.Children.Add(new Image { Source = new Uri(movieNames[3].large_cover_image) }, 1, 1);
-            //grid.Children.Add(new Image { Source = new Uri(movieNames[4].large_cover_image) }, 0, 2);
-            //grid.Children.Add(new Image { Source = new Uri(movieNames[5].large_cover_image) }, 1, 2);
-            //grid.Children.Add(new Image { Source = new Uri(movieNames[6].large_cover_image) }, 0, 3);
+            
 
             Content = scroll;
             scroll.Content = grid;
-        }
 
+         
+        }
         public async Task<YIFYMovies> ParseJsonAsync(string url)
         {
             HttpClient htClient = new HttpClient();
