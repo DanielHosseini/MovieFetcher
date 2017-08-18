@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json;
+using PCLStorage;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using PCLStorage;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -63,26 +62,27 @@ namespace MovieFetcher
                     movieNumber++;
                 }
             }
-            
+
 
             Content = scroll;
             scroll.Content = grid;
-
-         
         }
+
         private async Task<YIFYMovies> ParseJsonAsync(string url)
         {
             HttpClient htClient = new HttpClient();
             var jsonResponse = await htClient.GetStringAsync(url);
+           // await WriteJSONToLocalFileAsync(jsonResponse);
             var YIFYMovies = JsonConvert.DeserializeObject<YIFYMovies>(jsonResponse);
-            await WriteJSONToLocalFileAsync(jsonResponse);
 
             return YIFYMovies;
         }
 
-        private async Task WriteJSONToLocalFileAsync(string JSONContent) {
+        private async Task WriteJSONToLocalFileAsync(string JSONContent)
+        {
             string fileName = "JSONMovieData.txt";
-            IFolder folder = FileSystem.Current.LocalStorage;
+            IFolder rootFolder = FileSystem.Current.LocalStorage;
+            IFolder folder = await rootFolder.CreateFolderAsync("storage", CreationCollisionOption.OpenIfExists);
             IFile file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
             await file.WriteAllTextAsync(JSONContent);
             await DisplayAlert("Operation Done", "JSON to File", "OK");
@@ -91,15 +91,17 @@ namespace MovieFetcher
 
         public async Task<string> ReadJSONFromFileAsync()
         {
-
             IFolder folder = FileSystem.Current.LocalStorage;
             IFile file = await folder.GetFileAsync("JSONMovieData.txt");
             var jsonContent = await file.ReadAllTextAsync();
             await DisplayAlert("Operation Done", "Reading JSON from file", "OK");
 
             return jsonContent;
-          
-            }
+        }
+
+        private void Fetch_Movies(object sender, EventArgs e)
+        {
+
         }
     }
 }
