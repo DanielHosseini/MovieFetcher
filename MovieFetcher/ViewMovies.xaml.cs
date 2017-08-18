@@ -34,12 +34,13 @@ namespace MovieFetcher
                 //Throw error to UI
                 throw;
             }
-            loadingIndictor.IsRunning = false;
-        }
+
+		}
 
         public void PopulateUiGridView(YIFYMovies yifyMovies)
         {
-            var TotalAmountOfMovies = yifyMovies.data.limit;
+			loadingIndictor.IsRunning = false;
+			var TotalAmountOfMovies = yifyMovies.data.limit;
             IList<Movy> movieObject = yifyMovies.data.movies;
             var scroll = new ScrollView
             {
@@ -49,22 +50,30 @@ namespace MovieFetcher
             {
                 RowSpacing = 0,
                 ColumnSpacing = 0
+                   
             };
 
             for (int row = 0; row < TotalAmountOfMovies / 2; row++)
-            {
-                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+			{
 
-                for (int column = 0; column < 2; column++)
+
+
+				for (int column = 0; column < 2; column++)
                 {
-                    grid.Children.Add(new Image { Source = new Uri(movieObject[movieNumber].large_cover_image) }, column, row);
-                    movieNumber++;
+
+                    grid.Children.Add(new Image {Aspect = Aspect.Fill, Source = new Uri(movieObject[movieNumber].large_cover_image) }, column, row);
+
+
+
+					movieNumber++;
                 }
-            }
+			
+
+			}
 
 
-            Content = scroll;
+
+			Content = scroll;
             scroll.Content = grid;
         }
 
