@@ -63,7 +63,6 @@ namespace MovieFetcher
 				for (int column = 0; column < 2; column++)
                 {
 
-					//  grid.Children.Add(new Image {Aspect = Aspect.Fill,  Source = new Uri(movieObject[movieNumber].large_cover_image) }, column, row);
 					var image = new Image {Aspect = Aspect.Fill,  Source = new Uri(movieObject[movieNumber].large_cover_image) };
 					image.GestureRecognizers.Add(tapGestureRecognizer);
 					grid.Children.Add(image, column, row);
@@ -76,19 +75,21 @@ namespace MovieFetcher
 
 			}
 
-			tapGestureRecognizer.Tapped += (sender, e) => {
-                // handle the tap
-                var image = (Image) sender;
-                var childrenIDTapped = grid.Children.IndexOf(image);
-
-                DisplayAlert("Tapped", childrenIDTapped.ToString(), "ok");
-
-			};
-
-
 
 			Content = scroll;
             scroll.Content = grid;
+
+			tapGestureRecognizer.Tapped += async (sender, e) =>
+			{
+				// handle the tap
+				var image = (Image)sender;
+				var childrenIDTapped = grid.Children.IndexOf(image);
+				image.Opacity = .5;
+				await Task.Delay(1000);
+				image.Opacity = 1;
+
+
+			};
         }
 
         private async Task<YIFYMovies> ParseJsonAsync(string url)
