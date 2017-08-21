@@ -26,16 +26,19 @@ namespace MovieFetcher
             try
             {
                 var YIFYMoviesResponse = await jsonHandler.ParseJsonAsync(YIFYURL);
-                PopulateUiGridView(YIFYMoviesResponse);
-            }
-            catch (Exception e)
+				PopulateUiGridView(YIFYMoviesResponse);
+
+			}
+            catch (Exception )
             {
                 //Throw error to UI
                 throw new Exception("Fault");
             }
-        }
 
-        public void PopulateUiGridView(YIFYMovies yifyMovies)
+		}
+
+
+		public void PopulateUiGridView(YIFYMovies yifyMovies)
         {
             loadingIndictor.IsRunning = false;
 
@@ -75,7 +78,13 @@ namespace MovieFetcher
                 var movieIDTapped = grid.Children.IndexOf(image);
                 var specificMovieObject = movieObjects[movieIDTapped];
                 var specificPage = new SpecificView(specificMovieObject);
-                await Navigation.PushAsync(specificPage);
+                await Navigation.PushAsync(new SpecificView());
+
+
+                //var ViewMovies = new NavigationPage(new SpecificView());
+
+              //  await Navigation.PopAsync();
+               // await Navigation.PushAsync(ViewMovies);
                 await Task.Delay(1000);
                 image.Opacity = 1;
             };

@@ -8,7 +8,7 @@ public class Torrent
     public int seeds { get; set; }
     public int peers { get; set; }
     public string size { get; set; }
-    public int size_bytes { get; set; }
+    public object size_bytes { get; set; }
     public string date_uploaded { get; set; }
     public int date_uploaded_unix { get; set; }
 }
