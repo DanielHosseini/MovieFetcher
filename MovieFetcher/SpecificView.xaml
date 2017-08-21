@@ -5,10 +5,8 @@
     <ContentPage.Content>
         <Grid>
             <StackLayout Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" BackgroundColor="Green">
-                <Image Source="{Binding CoverImage}"/>
+                <Image Source="{Binding CoverImage}" />
             </StackLayout>
         </Grid>
-        
-     
     </ContentPage.Content>
 </ContentPage>

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace MovieFetcher
@@ -18,7 +12,6 @@ namespace MovieFetcher
         public string IMDB { get; private set; }
         public string CoverImageLink { get; private set; }
         public Image CoverImage { get; private set; }
-
 
         private Movy _specificMovieObject;
 

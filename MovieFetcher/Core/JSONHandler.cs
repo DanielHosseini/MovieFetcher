@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MovieFetcher.Core
 {
-    class JSONHandler
+    internal class JSONHandler
     {
         public async Task<YIFYMovies> ParseJsonAsync(string url)
         {
@@ -34,6 +34,5 @@ namespace MovieFetcher.Core
 
             return jsonContent;
         }
-
     }
 }
