@@ -1,10 +1,6 @@
 ﻿using MovieFetcher.Core;
-using Newtonsoft.Json;
-using PCLStorage;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -47,7 +43,6 @@ namespace MovieFetcher
             IList<Movy> movieObjects = yifyMovies.data.movies;
             var tapGestureRecognizer = new TapGestureRecognizer();
 
-
             var scroll = new ScrollView
             {
                 Orientation = ScrollOrientation.Vertical,
@@ -73,7 +68,6 @@ namespace MovieFetcher
             Content = scroll;
             scroll.Content = grid;
 
-
             tapGestureRecognizer.Tapped += async (sender, e) =>
             {
                 var image = (Image)sender;
@@ -87,11 +81,6 @@ namespace MovieFetcher
             };
         }
 
-
        
-        private void Fetch_Movies(object sender, EventArgs e)
-        {
-
-        }
     }
 }
