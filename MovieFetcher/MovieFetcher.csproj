@@ -36,8 +36,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="YIFYMovies.cs" />
+    <Compile Include="Core\JSONHandler.cs" />
+    <Compile Include="Core\YIFYMovies.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecificView.xaml.cs">
+      <DependentUpon>SpecificView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewMovies.xaml.cs">
       <DependentUpon>ViewMovies.xaml</DependentUpon>
     </Compile>
@@ -71,6 +75,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ViewMovies.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SpecificView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

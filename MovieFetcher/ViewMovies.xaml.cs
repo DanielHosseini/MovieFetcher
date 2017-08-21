@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using MovieFetcher.Core;
+using Newtonsoft.Json;
 using PCLStorage;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -14,6 +16,7 @@ namespace MovieFetcher
     {
         private const string YIFYURL = "https://yts.ag/api/v2/list_movies.json?limit=20&sort_by=year&order_by=desc";
         private int movieNumber = 0;
+        private JSONHandler jsonHandler = new JSONHandler();
 
         public ViewMovies()
         {
@@ -26,25 +29,26 @@ namespace MovieFetcher
             loadingIndictor.IsRunning = true;
             try
             {
-                var YIFYMoviesResponse = await ParseJsonAsync(YIFYURL);
+                var YIFYMoviesResponse = await jsonHandler.ParseJsonAsync(YIFYURL);
                 PopulateUiGridView(YIFYMoviesResponse);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 //Throw error to UI
-                throw;
+                throw new Exception("Fault");
             }
-
-		}
+        }
 
         public void PopulateUiGridView(YIFYMovies yifyMovies)
         {
-			loadingIndictor.IsRunning = false;
+            loadingIndictor.IsRunning = false;
 
-			var TotalAmountOfMovies = yifyMovies.data.limit;
-            IList<Movy> movieObject = yifyMovies.data.movies;
-			var tapGestureRecognizer = new TapGestureRecognizer();
-			var scroll = new ScrollView
+            var TotalAmountOfMovies = yifyMovies.data.limit;
+            IList<Movy> movieObjects = yifyMovies.data.movies;
+            var tapGestureRecognizer = new TapGestureRecognizer();
+
+
+            var scroll = new ScrollView
             {
                 Orientation = ScrollOrientation.Vertical,
             };
@@ -52,77 +56,39 @@ namespace MovieFetcher
             {
                 RowSpacing = 0,
                 ColumnSpacing = 0
-                   
             };
 
             for (int row = 0; row < TotalAmountOfMovies / 2; row++)
-			{
-
-
-
-				for (int column = 0; column < 2; column++)
+            {
+                for (int column = 0; column < 2; column++)
                 {
+                    var image = new Image { Aspect = Aspect.Fill, Source = new Uri(movieObjects[movieNumber].large_cover_image) };
+                    image.GestureRecognizers.Add(tapGestureRecognizer);
+                    grid.Children.Add(image, column, row);
 
-					var image = new Image {Aspect = Aspect.Fill,  Source = new Uri(movieObject[movieNumber].large_cover_image) };
-					image.GestureRecognizers.Add(tapGestureRecognizer);
-					grid.Children.Add(image, column, row);
-
-
-
-					movieNumber++;
+                    movieNumber++;
                 }
-			
+            }
 
-			}
-
-
-			Content = scroll;
+            Content = scroll;
             scroll.Content = grid;
 
-			tapGestureRecognizer.Tapped += async (sender, e) =>
-			{
-				// handle the tap
-				var image = (Image)sender;
-				var childrenIDTapped = grid.Children.IndexOf(image);
-				image.Opacity = .5;
-				await Task.Delay(1000);
-				image.Opacity = 1;
 
-
-			};
+            tapGestureRecognizer.Tapped += async (sender, e) =>
+            {
+                var image = (Image)sender;
+                image.Opacity = .5;
+                var movieIDTapped = grid.Children.IndexOf(image);
+                var specificMovieObject = movieObjects[movieIDTapped];
+                var specificPage = new SpecificView(specificMovieObject);
+                await Navigation.PushAsync(specificPage);
+                await Task.Delay(1000);
+                image.Opacity = 1;
+            };
         }
 
-        private async Task<YIFYMovies> ParseJsonAsync(string url)
-        {
-            HttpClient htClient = new HttpClient();
-            var jsonResponse = await htClient.GetStringAsync(url);
-           // await WriteJSONToLocalFileAsync(jsonResponse);
-            var YIFYMovies = JsonConvert.DeserializeObject<YIFYMovies>(jsonResponse);
 
-            return YIFYMovies;
-        }
-
-        private async Task WriteJSONToLocalFileAsync(string JSONContent)
-        {
-            string fileName = "JSONMovieData.txt";
-            IFolder rootFolder = FileSystem.Current.LocalStorage;
-            IFolder folder = await rootFolder.CreateFolderAsync("storage", CreationCollisionOption.OpenIfExists);
-            IFile file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
-            await file.WriteAllTextAsync(JSONContent);
-            await DisplayAlert("Operation Done", "JSON to File", "OK");
-
-        }
-
-        public async Task<string> ReadJSONFromFileAsync()
-        {
-            IFolder folder = FileSystem.Current.LocalStorage;
-            IFile file = await folder.GetFileAsync("JSONMovieData.txt");
-            var jsonContent = await file.ReadAllTextAsync();
-            await DisplayAlert("Operation Done", "Reading JSON from file", "OK");
-
-            return jsonContent;
-        }
-
+       
         private void Fetch_Movies(object sender, EventArgs e)
         {
 
