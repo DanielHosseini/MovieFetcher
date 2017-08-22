@@ -16,6 +16,11 @@ namespace MovieFetcher
         public Uri CoverImageUri { get; set; }
         public ImageSource ImdbLogoSource { get; set; }
         public ImageSource TomatoLogoSource { get; set; }
+        public ImageSource YouTubeLogoSource { get; set; }
+        private TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
+
+
+        public string YoutubeIdCode { get; set; }
 
 
 
@@ -30,11 +35,22 @@ namespace MovieFetcher
             IMDBRating = _specificMovieObject.rating;
             CoverImageLink = _specificMovieObject.large_cover_image;
             CoverImageUri = new Uri(CoverImageLink);
+            YoutubeIdCode = _specificMovieObject.yt_trailer_code;
             ImdbLogoSource = ImageSource.FromResource("MovieFetcher.Images.imdb_128.png");
             TomatoLogoSource = ImageSource.FromResource("MovieFetcher.Images.tomato_128.png");
+            YouTubeLogoSource = ImageSource.FromResource("MovieFetcher.Images.youtube_128.png");
+            youtubeBtn.GestureRecognizers.Add(tapGestureRecognizer);
 
-            BindingContext = this;
+                BindingContext = this;
+
+
+
+            tapGestureRecognizer.Tapped += (sender, e) =>
+            {
+                DisplayAlert("test", "pressed", "ok");
+            };
 
         }
+
     }
 }

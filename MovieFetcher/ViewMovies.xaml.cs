@@ -18,6 +18,7 @@ namespace MovieFetcher
         public ViewMovies()
         {
             InitializeComponent();
+            Title = "MovieFetcher";
             FetchMovies();
         }
 
@@ -33,7 +34,7 @@ namespace MovieFetcher
             catch (Exception )
             {
                 //Throw error to UI
-                throw new Exception("Fault");
+                throw new InvalidOperationException("Problem with Parsing JSON file");
             }
 
 		}
@@ -78,7 +79,7 @@ namespace MovieFetcher
                 image.Opacity = .5;
                 var movieIDTapped = grid.Children.IndexOf(image);
                 var specificMovieObject = movieObjects[movieIDTapped];
-               await Navigation.PushAsync(new SpecificView(specificMovieObject));
+                await Navigation.PushAsync(new SpecificView(specificMovieObject));
                 await Task.Delay(1000);
                 image.Opacity = 1;
             };
