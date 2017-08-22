@@ -22,8 +22,8 @@ namespace MovieFetcher
         public SpecificView(Movy specificMovieObject) : base()
         {
             InitializeComponent();
-
             _specificMovieObject = specificMovieObject;
+            Title = _specificMovieObject.title;
             MovieTitle = _specificMovieObject.title;
             Year = _specificMovieObject.year;
             Summary = _specificMovieObject.summary;

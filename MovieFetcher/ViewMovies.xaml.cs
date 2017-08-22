@@ -79,12 +79,6 @@ namespace MovieFetcher
                 var movieIDTapped = grid.Children.IndexOf(image);
                 var specificMovieObject = movieObjects[movieIDTapped];
                await Navigation.PushAsync(new SpecificView(specificMovieObject));
-
-
-                //var ViewMovies = new NavigationPage(new SpecificView());
-
-                //  await Navigation.PopAsync();
-                // await Navigation.PushAsync(ViewMovies);
                 await Task.Delay(1000);
                 image.Opacity = 1;
             };
