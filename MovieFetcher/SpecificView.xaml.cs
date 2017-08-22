@@ -30,8 +30,8 @@ namespace MovieFetcher
             IMDBRating = _specificMovieObject.rating;
             CoverImageLink = _specificMovieObject.large_cover_image;
             CoverImageUri = new Uri(CoverImageLink);
-            ImdbLogoSource = ImageSource.FromResource("MovieFetcher.Images.imdb_64.png");
-            TomatoLogoSource = ImageSource.FromResource("MovieFetcher.Images.tomato_64.png");
+            ImdbLogoSource = ImageSource.FromResource("MovieFetcher.Images.imdb_128.png");
+            TomatoLogoSource = ImageSource.FromResource("MovieFetcher.Images.tomato_128.png");
 
             BindingContext = this;
 
