@@ -47,7 +47,7 @@ namespace MovieFetcher
 
             tapGestureRecognizer.Tapped += (sender, e) =>
             {
-                DisplayAlert("test", "pressed", "ok");
+               Device.OpenUri(new Uri("https://www.youtube.com/watch?v="+ YoutubeIdCode));
             };
 
         }
