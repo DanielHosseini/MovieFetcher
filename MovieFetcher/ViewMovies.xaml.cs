@@ -13,6 +13,7 @@ namespace MovieFetcher
         private const string YIFYURL = "https://yts.ag/api/v2/list_movies.json?limit=20&sort_by=year&order_by=desc";
         private int movieNumber = 0;
         private JSONHandler jsonHandler = new JSONHandler();
+        
 
         public ViewMovies()
         {
@@ -77,14 +78,13 @@ namespace MovieFetcher
                 image.Opacity = .5;
                 var movieIDTapped = grid.Children.IndexOf(image);
                 var specificMovieObject = movieObjects[movieIDTapped];
-                var specificPage = new SpecificView(specificMovieObject);
-                await Navigation.PushAsync(new SpecificView());
+               await Navigation.PushAsync(new SpecificView(specificMovieObject));
 
 
                 //var ViewMovies = new NavigationPage(new SpecificView());
 
-              //  await Navigation.PopAsync();
-               // await Navigation.PushAsync(ViewMovies);
+                //  await Navigation.PopAsync();
+                // await Navigation.PushAsync(ViewMovies);
                 await Task.Delay(1000);
                 image.Opacity = 1;
             };

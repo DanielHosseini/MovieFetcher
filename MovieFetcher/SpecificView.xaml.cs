@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace MovieFetcher
@@ -9,29 +10,31 @@ namespace MovieFetcher
         public string MovieTitle { get; private set; }
         public int Year { get; private set; }
         public string Summary { get; private set; }
-        public string IMDB { get; private set; }
+        public double IMDBRating { get; private set; }
         public string CoverImageLink { get; private set; }
-        public Image CoverImage { get; private set; }
-
         private Movy _specificMovieObject;
+        public Uri CoverImageUri { get; set; }
+        public ImageSource ImdbLogoSource { get; set; }
+        public ImageSource TomatoLogoSource { get; set; }
 
-        public SpecificView()
+
+
+        public SpecificView(Movy specificMovieObject) : base()
         {
             InitializeComponent();
-        }
 
-        public SpecificView(Movy specificMovieObject)
-        {
             _specificMovieObject = specificMovieObject;
             MovieTitle = _specificMovieObject.title;
             Year = _specificMovieObject.year;
             Summary = _specificMovieObject.summary;
-            IMDB = _specificMovieObject.imdb_code;
-            CoverImage = new Image
-            {
-                Source = CoverImageLink,
-                Aspect = Aspect.AspectFill
-            };
+            IMDBRating = _specificMovieObject.rating;
+            CoverImageLink = _specificMovieObject.large_cover_image;
+            CoverImageUri = new Uri(CoverImageLink);
+            ImdbLogoSource = ImageSource.FromResource("MovieFetcher.Images.imdb_64.png");
+            TomatoLogoSource = ImageSource.FromResource("MovieFetcher.Images.tomato_64.png");
+
+            BindingContext = this;
+
         }
     }
 }

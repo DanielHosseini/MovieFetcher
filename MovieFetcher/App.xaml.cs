@@ -8,7 +8,8 @@ namespace MovieFetcher
         {
             InitializeComponent();
 
-            MainPage = new ViewMovies();
+            MainPage = new NavigationPage(new ViewMovies());
+            
         }
 
         protected override void OnStart()
