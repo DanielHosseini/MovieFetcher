@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,12 +16,13 @@ namespace MovieFetcher
         public int TotalRunTime { get; set; }
         private Movy _specificMovieObject;
         public Uri CoverImageUri { get; set; }
+        public string Quality { get; set; }
         public ImageSource ImdbLogoSource { get; set; }
         public ImageSource TomatoLogoSource { get; set; }
         public ImageSource YouTubeLogoSource { get; set; }
+        public ImageSource QualityLogoSource { get; set; }
         public ImageSource RuntimeLogoSource { get; set; }
         private TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
-
 
         public string YoutubeIdCode { get; set; }
 
@@ -28,7 +30,6 @@ namespace MovieFetcher
         {
             InitializeComponent();
         }
-
 
         public SpecificView(Movy specificMovieObject, int movieID) : this()
         {
@@ -39,6 +40,7 @@ namespace MovieFetcher
             Summary = _specificMovieObject.summary;
             IMDBRating = _specificMovieObject.rating;
             TotalRunTime = _specificMovieObject.runtime;
+            Quality = ReturnQualtiyOfMovie(_specificMovieObject.torrents);
             CoverImageLink = _specificMovieObject.large_cover_image;
             CoverImageUri = new Uri(CoverImageLink);
             YoutubeIdCode = _specificMovieObject.yt_trailer_code;
@@ -46,20 +48,25 @@ namespace MovieFetcher
             TomatoLogoSource = ImageSource.FromResource("MovieFetcher.Images.tomato_128.png");
             YouTubeLogoSource = ImageSource.FromResource("MovieFetcher.Images.youtube_128.png");
             RuntimeLogoSource = ImageSource.FromResource("MovieFetcher.Images.runtime_128.png");
-
-
-
+            QualityLogoSource = ImageSource.FromResource("MovieFetcher.Images.quality_128.png");
             youtubeBtn.GestureRecognizers.Add(tapGestureRecognizer);
-
 
             BindingContext = this;
 
             tapGestureRecognizer.Tapped += (sender, e) =>
             {
-               Device.OpenUri(new Uri("https://www.youtube.com/watch?v="+ YoutubeIdCode));
+                Device.OpenUri(new Uri("https://www.youtube.com/watch?v=" + YoutubeIdCode));
             };
-
         }
 
+        private string ReturnQualtiyOfMovie(IList<Torrent> torrents)
+        {
+            string quality = "";
+            foreach (var item in torrents)
+            {
+                quality += item.quality + " ";
+            }
+            return quality;
+        }
     }
 }

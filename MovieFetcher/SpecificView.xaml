@@ -13,9 +13,8 @@
                 <Image Source="{Binding CoverImageUri}" Aspect="Fill" />
             </StackLayout>
             <StackLayout  Margin="10, 0, 0 ,0" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="0" Grid.Column="2" >
-                <StackLayout Orientation="Horizontal" >
-
-                    <StackLayout Orientation="Vertical" >
+                        <StackLayout Orientation="Horizontal" >
+                            <StackLayout Orientation="Vertical" >
                         <Image Source="{Binding ImdbLogoSource}" />
                         <Label TextColor="White" HorizontalTextAlignment="Center" Text="{Binding IMDBRating, StringFormat='{0}/10'}" />
                     </StackLayout>
@@ -32,6 +31,10 @@
                 <StackLayout Margin="0, 5, 0, 0" Orientation="Horizontal">
                     <Image Source="{Binding RuntimeLogoSource}"  />
                     <Label TextColor="White" VerticalTextAlignment="Center" Text="{Binding TotalRunTime, StringFormat='{0} min'}" />
+                </StackLayout>
+                 <StackLayout Margin="0, 5, 0, 0" Orientation="Horizontal">
+                    <Image Source="{Binding QualityLogoSource}"  />
+                    <Label TextColor="White" VerticalTextAlignment="Center" Text="{Binding Quality}" />
                 </StackLayout>
             </StackLayout>
                 <StackLayout Margin='5, 0, 0, 0' Grid.Row="1"  Grid.ColumnSpan="3" >
