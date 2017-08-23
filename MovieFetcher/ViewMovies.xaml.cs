@@ -62,7 +62,8 @@ namespace MovieFetcher
             {
                 for (int column = 0; column < 2; column++)
                 {
-                    var image = new Image { Aspect = Aspect.Fill, Source = new Uri(movieObjects[movieNumber].large_cover_image) };
+                    var image = new Image { Aspect = Aspect.Fill, Source = new Uri(movieObjects[movieNumber].large_cover_image ) };
+               
                     image.GestureRecognizers.Add(tapGestureRecognizer);
                     grid.Children.Add(image, column, row);
 
@@ -79,7 +80,7 @@ namespace MovieFetcher
                 image.Opacity = .5;
                 var movieIDTapped = grid.Children.IndexOf(image);
                 var specificMovieObject = movieObjects[movieIDTapped];
-                await Navigation.PushAsync(new SpecificView(specificMovieObject));
+                await Navigation.PushAsync(new SpecificView(specificMovieObject, movieIDTapped));
                 await Task.Delay(1000);
                 image.Opacity = 1;
             };
