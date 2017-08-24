@@ -5,7 +5,5 @@
     <AbsoluteLayout>
         <ActivityIndicator x:Name="loadingIndictor" IsRunning="False"
                            AbsoluteLayout.LayoutBounds="0.5, 0.5, 0.5, 0.5" AbsoluteLayout.LayoutFlags="All" />
-        <Button x:Name="fetchBtn" Text="Fetch JSON"
-            AbsoluteLayout.LayoutBounds="0,1,1,50" AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional" />
     </AbsoluteLayout>
 </ContentPage>

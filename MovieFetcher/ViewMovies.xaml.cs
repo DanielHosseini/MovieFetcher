@@ -10,10 +10,9 @@ namespace MovieFetcher
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewMovies : ContentPage
     {
-        private const string YIFYURL = "https://yts.ag/api/v2/list_movies.json?limit=20&sort_by=year&order_by=desc";
+        private const string YIFYURL = "https://yts.ag/api/v2/list_movies.json?limit=20&sort_by=year&order_by=desc&limit=50";
         private int movieNumber = 0;
         private JSONHandler jsonHandler = new JSONHandler();
-        
 
         public ViewMovies()
         {
@@ -81,7 +80,6 @@ namespace MovieFetcher
                 var movieIDTapped = grid.Children.IndexOf(image);
                 var specificMovieObject = movieObjects[movieIDTapped];
                 await Navigation.PushAsync(new SpecificView(specificMovieObject, movieIDTapped));
-                await Task.Delay(1000);
                 image.Opacity = 1;
             };
         }
