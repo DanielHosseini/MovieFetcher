@@ -3,5 +3,6 @@ Fetches the latest movies using the YIFY API, the movies are sorted by year and 
 
 ![Main Screen of the application](/https://github.com/DanielHosseini/MovieFetcher/blob/master/screenshots/MainScreen.PNG/?raw=true "Main Page of the app")
 
+![Main Screen of the application](screenshots/MainScreen.png "Main Page of the app")
 
 ![More details about a specific movie](/https://github.com/DanielHosseini/MovieFetcher/blob/master/screenshots/DetailedPage.PNG/?raw=true "Detailed Page")
