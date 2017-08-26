@@ -44,11 +44,10 @@ namespace MovieFetcher
             CoverImageLink = _specificMovieObject.large_cover_image;
             CoverImageUri = new Uri(CoverImageLink);
             YoutubeIdCode = _specificMovieObject.yt_trailer_code;
-            ImdbLogoSource = ImageSource.FromResource("MovieFetcher.Images.imdb_128.png");
-            TomatoLogoSource = ImageSource.FromResource("MovieFetcher.Images.tomato_128.png");
-            YouTubeLogoSource = ImageSource.FromResource("MovieFetcher.Images.youtube_128.png");
-            RuntimeLogoSource = ImageSource.FromResource("MovieFetcher.Images.runtime_128.png");
-            QualityLogoSource = ImageSource.FromResource("MovieFetcher.Images.quality_128.png");
+            ImdbLogoSource = ImageSource.FromResource("MovieFetcher.Images.imdb128.png");
+            YouTubeLogoSource = ImageSource.FromResource("MovieFetcher.Images.youtube128.png");
+            RuntimeLogoSource = ImageSource.FromResource("MovieFetcher.Images.runtime128.png");
+            QualityLogoSource = ImageSource.FromResource("MovieFetcher.Images.quality128.png");
             youtubeBtn.GestureRecognizers.Add(tapGestureRecognizer);
 
             BindingContext = this;

@@ -1,7 +1,6 @@
 ﻿using MovieFetcher.Core;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -23,11 +22,12 @@ namespace MovieFetcher
 
         private async void FetchMovies()
         {
-            loadingIndictor.IsRunning = true;
             try
             {
-                var YIFYMoviesResponse = await jsonHandler.ParseJsonAsync(YIFYURL);
+				loadingIndictor.IsRunning = true;
+				var YIFYMoviesResponse = await jsonHandler.ParseJsonAsync(YIFYURL);
 				PopulateUiGridView(YIFYMoviesResponse);
+
 
 			}
             catch (Exception )
@@ -41,9 +41,8 @@ namespace MovieFetcher
 
 		public void PopulateUiGridView(YIFYMovies yifyMovies)
         {
-            loadingIndictor.IsRunning = false;
-
-            var TotalAmountOfMovies = yifyMovies.data.limit;
+			loadingIndictor.IsRunning = false;
+			var TotalAmountOfMovies = yifyMovies.data.limit;
             IList<Movy> movieObjects = yifyMovies.data.movies;
             var tapGestureRecognizer = new TapGestureRecognizer();
 
@@ -61,7 +60,7 @@ namespace MovieFetcher
             {
                 for (int column = 0; column < 2; column++)
                 {
-                    var image = new Image { Aspect = Aspect.Fill, Source = new Uri(movieObjects[movieNumber].large_cover_image ) };
+                    var image = new Image { Aspect = Aspect.Fill, Source = ImageSource.FromUri(new Uri(movieObjects[movieNumber].large_cover_image ))};
                
                     image.GestureRecognizers.Add(tapGestureRecognizer);
                     grid.Children.Add(image, column, row);
