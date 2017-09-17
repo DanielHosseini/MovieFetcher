@@ -60,7 +60,7 @@ namespace MovieFetcher
             {
                 for (int column = 0; column < 2; column++)
                 {
-                    var image = new Image { Aspect = Aspect.Fill, Source = ImageSource.FromUri(new Uri(movieObjects[movieNumber].large_cover_image ))};
+                    var image = new Image { Aspect = Aspect.Fill, Source = movieObjects[movieNumber].large_cover_image};
 
 
                     image.GestureRecognizers.Add(tapGestureRecognizer);
