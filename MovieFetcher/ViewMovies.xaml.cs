@@ -9,7 +9,7 @@ namespace MovieFetcher
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewMovies : ContentPage
     {
-        private const string YIFYURL = "https://yts.ag/api/v2/list_movies.json?limit=20&sort_by=year&order_by=desc&limit=50";
+        private const string YIFYURL = "https://yts.ag/api/v2/list_movies.json?sort_by=year&order_by=desc&limit=50";
         private int movieNumber = 0;
         private JSONHandler jsonHandler = new JSONHandler();
 
@@ -27,6 +27,7 @@ namespace MovieFetcher
 				loadingIndictor.IsRunning = true;
 				var YIFYMoviesResponse = await jsonHandler.ParseJsonAsync(YIFYURL);
 				PopulateUiGridView(YIFYMoviesResponse);
+				loadingIndictor.IsRunning = false;
 
 
 			}
@@ -41,7 +42,6 @@ namespace MovieFetcher
 
 		public void PopulateUiGridView(YIFYMovies yifyMovies)
         {
-			loadingIndictor.IsRunning = false;
 			var TotalAmountOfMovies = yifyMovies.data.limit;
             IList<Movy> movieObjects = yifyMovies.data.movies;
             var tapGestureRecognizer = new TapGestureRecognizer();
@@ -61,7 +61,8 @@ namespace MovieFetcher
                 for (int column = 0; column < 2; column++)
                 {
                     var image = new Image { Aspect = Aspect.Fill, Source = ImageSource.FromUri(new Uri(movieObjects[movieNumber].large_cover_image ))};
-               
+
+
                     image.GestureRecognizers.Add(tapGestureRecognizer);
                     grid.Children.Add(image, column, row);
 
@@ -74,12 +75,12 @@ namespace MovieFetcher
 
             tapGestureRecognizer.Tapped += async (sender, e) =>
             {
-                var image = (Image)sender;
-                image.Opacity = .5;
-                var movieIDTapped = grid.Children.IndexOf(image);
+                var tempImage = (Image)sender;
+                tempImage.Opacity = .5;
+                var movieIDTapped = grid.Children.IndexOf(tempImage);
                 var specificMovieObject = movieObjects[movieIDTapped];
                 await Navigation.PushAsync(new SpecificView(specificMovieObject, movieIDTapped));
-                image.Opacity = 1;
+                tempImage.Opacity = 1;
             };
         }
 

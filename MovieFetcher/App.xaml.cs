@@ -8,9 +8,15 @@ namespace MovieFetcher
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new ViewMovies());
+            MainPage = new NavigationPage(new ViewMovies())
+            { 
+                BarBackgroundColor = Color.FromHex("#1E2A2D"),
+                BarTextColor = Color.White,
             
-        }
+            };
+
+
+		}
 
         protected override void OnStart()
         {
