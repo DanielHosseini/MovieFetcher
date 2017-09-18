@@ -151,7 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MovieFetcher\MovieFetcher.csproj">
-      <Project>{8520ccf6-e8dc-42b9-8ef2-9360cfca05a4}</Project>
+      <Project>{DF740CB5-047F-4B46-9DBF-56A31EB6AEAD}</Project>
       <Name>MovieFetcher</Name>
     </ProjectReference>
   </ItemGroup>
