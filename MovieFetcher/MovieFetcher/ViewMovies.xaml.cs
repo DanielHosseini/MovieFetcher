@@ -13,7 +13,7 @@ namespace MovieFetcher
         private const string YIFYURL = "https://yts.ag/api/v2/list_movies.json?sort_by=year&order_by=desc&limit=50";
         private int movieNumber = 0;
         private JSONHandler jsonHandler = new JSONHandler();
-        private bool _userTapped;
+        private bool _userTapped = false;
 
 
         public ViewMovies()
