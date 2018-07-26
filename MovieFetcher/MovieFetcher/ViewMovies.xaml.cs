@@ -10,7 +10,7 @@ namespace MovieFetcher
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewMovies : ContentPage
     {
-        private const string YIFYURL = "https://yts.ag/api/v2/list_movies.json?sort_by=year&order_by=desc&limit=50";
+        private const string YIFYURL = "http://yts.ag/api/v2/list_movies.json?sort_by=year&order_by=desc&limit=50";
         private int movieNumber = 0;
         private JSONHandler jsonHandler = new JSONHandler();
         private bool _userTapped = false;
@@ -23,6 +23,9 @@ namespace MovieFetcher
             FetchMovies();
         }
 
+        /// <summary>
+        /// Calls the service and uses the model to populate the grid
+        /// </summary>
         private async void FetchMovies()
         {
             try
@@ -34,15 +37,17 @@ namespace MovieFetcher
 
 
             }
-            catch (Exception)
+            //Display any exception message on view
+            catch (Exception ex)
             {
-                //Throw error to UI
-                throw new InvalidOperationException("Problem with Parsing JSON file");
+                await DisplayAlert("Exception", ex.Message, "OK");
             }
 
         }
 
-
+        /// <summary>
+        /// Generate a gridview based on the model given
+        /// </summary>
         public void PopulateUiGridView(YIFYMovies yifyMovies)
         {
             var TotalAmountOfMovies = yifyMovies.data.limit;
@@ -75,7 +80,7 @@ namespace MovieFetcher
             scroll.Content = grid;
             tapGestureRecognizer.Tapped += TappedSpecificVideo;
 
-
+           //Animation and views specific view based on Movie clicked
             async void TappedSpecificVideo(object sender, EventArgs e)
             {
                 if (_userTapped)
@@ -91,11 +96,6 @@ namespace MovieFetcher
                 _userTapped = false;
 
             }
-
         }
-
-      
-
-
     }
 }
